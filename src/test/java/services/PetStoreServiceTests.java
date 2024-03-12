@@ -102,24 +102,24 @@ public class PetStoreServiceTests
             RequestBodyException, PetInventoryFileNotCreatedException, PetStoreAnimalTypeException,
             PetTypeNotSupportedException, PetDataStoreException {
 
-        /*Mockito.doReturn(myPets).when(petRepository).getPetInventory(); //mock the getInventory Repo
+        Mockito.doReturn(myPets).when(petRepository).getPetInventory(); //mock the getInventory Repo
+
         newDogItem = new DogEntity(AnimalType.DOMESTIC, FUR, Gender.FEMALE, Breed.GERMAN_SHEPHERD,
-                new BigDecimal("225.00"));
+                new BigDecimal("225.00"), 5);
+
         List<PetEntity> sortedPets = myPets.stream()
                 .filter(p -> p.getPetType().equals(PetType.DOG))
                 .sorted(Comparator.comparingInt(PetEntity::getPetId))
                 .collect(Collectors.toList());
 
-        Mockito.lenient().doReturn(newDogItem).when(this.petRepository).createPetEntity(newDogItem,sortedPets);*/
-        newDogItem = new DogEntity(AnimalType.DOMESTIC, FUR, Gender.FEMALE, Breed.GERMAN_SHEPHERD,
-                new BigDecimal("225.00"));
-        Mockito.doReturn(newDogItem).when(petRepository).createPetEntity(newDogItem,myPets); //mock the getInventory Repo
+        Mockito.lenient().doReturn(newDogItem).when(this.petRepository).createPetEntity(newDogItem,sortedPets);
+
         PetEntity aEntity = this.petService.addInventory(PetType.DOG, newDogItem);
        // System.out.println("say size" + sortedPets.size());
         System.out.println("say what" + aEntity.getPetType());
         List<DynamicTest> inventoryTests = Arrays.asList(
                 DynamicTest.dynamicTest("Pet item with Dog id 2",
-                        ()-> assertEquals(2, aEntity.getPetId())),
+                        ()-> assertEquals(5, aEntity.getPetId())),
                 DynamicTest.dynamicTest("Dog breed",
                         ()-> assertTrue(AnimalType.DOMESTIC == aEntity.getAnimalType())),
                 DynamicTest.dynamicTest("Dog Gender",
@@ -139,6 +139,8 @@ public class PetStoreServiceTests
                 .filter(p -> p.getPetType().equals(PetType.DOG) && p.getPetId() == 3)
                 .findFirst()
                 .orElse(null); //capture the item from the existing list in myPets
+
+        Mockito.lenient().doReturn(myPets).when(petRepository).getPetInventory(); //mock the getInventory Repo
 
         //mock the removeEntity() repo and define the results
         Mockito.lenient().doReturn(removedPetItem).when(this.petRepository).removeEntity(removedPetItem);

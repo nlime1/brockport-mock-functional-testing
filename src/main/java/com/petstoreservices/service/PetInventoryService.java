@@ -10,6 +10,7 @@ import com.petstore.exceptions.PetTypeNotSupportedException;
 import com.petstoreservices.exceptions.*;
 import com.petstoreservices.repository.PetRepository;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
@@ -26,12 +27,13 @@ import java.util.stream.Collectors;
 @Service
 public class PetInventoryService {
 
-    private final PetRepository petRepo;
+    @Autowired
+    private PetRepository petRepo;
 
     public PetInventoryService()
     {
 
-        petRepo = new PetRepository();
+//        petRepo = new PetRepository();
     }
 
     /**

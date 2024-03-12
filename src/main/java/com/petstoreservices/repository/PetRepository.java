@@ -18,6 +18,7 @@ import com.petstoreservices.exceptions.UpdatePetException;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.simple.parser.ParseException;
+import org.springframework.stereotype.Repository;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -29,6 +30,7 @@ import java.util.stream.Collectors;
 /**
  * The Pet Repository initializes the pet inventory list and handles the conversion of the pet store list to json file
  */
+@Repository
 public class PetRepository {
 
 
@@ -89,7 +91,12 @@ public class PetRepository {
                 }
                 isPetSupported = true;
             }
-            case BIRD, SNAKE, default -> isPetSupported = false;
+            case BIRD, SNAKE -> {
+                isPetSupported = false;
+            }
+            default -> {
+                isPetSupported = false;
+            }
         }
         if (isPetSupported)
         {
