@@ -18,8 +18,7 @@ import java.util.stream.Stream;
 @SpringBootApplication
 @RestController
 public class PetstoreserviceApplication {
-	private static int index = 0;
-	private static boolean hasRun = false;
+
 	public static void main(String[] args){
 
 		try (Stream<Path> stream = Files.list(Paths.get("./datastore/original"))) {

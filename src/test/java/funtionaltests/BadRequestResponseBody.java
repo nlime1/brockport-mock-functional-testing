@@ -37,7 +37,7 @@ public class BadRequestResponseBody
      * @param message - message
      * @param path - path in url
      * @param status - status code returned
-     * @return
+     * @return list of {@link DynamicTest} that represent the test result
      */
     public List<DynamicTest> executeTests(String error, String message, String path, int status)
     {

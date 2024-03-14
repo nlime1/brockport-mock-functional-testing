@@ -157,7 +157,7 @@ public class PetEntity extends AbstractPet
         if(this.hasLegs != dataStorePetEntity.hasLegs)
         {
             System.out.println("Updating hasLegs value to[" + this.hasLegs + "]");
-            if(this.hasLegs == false)
+            if(!this.hasLegs)
             {
                 if(this.legs >0)
                 {

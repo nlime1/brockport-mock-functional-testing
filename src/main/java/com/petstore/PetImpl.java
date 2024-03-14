@@ -1,7 +1,6 @@
 package com.petstore;
 
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.petstore.animals.attributes.Breed;
 import com.petstore.animals.attributes.PetType;
 

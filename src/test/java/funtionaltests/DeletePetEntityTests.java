@@ -44,17 +44,18 @@ public class DeletePetEntityTests
 
     @TestFactory
     @DisplayName("Delete Pet Entity[Cat}")
-    public Stream<DynamicTest> deleteCatTest() throws PetDataStoreException {
-
+    public Stream<DynamicTest> deleteCatTest() throws PetDataStoreException
+    {
         List<PetEntity> cats =
                 expectedResults.stream()
                         .filter(p -> p.getPetType().equals(PetType.CAT))
                         .sorted(Comparator.comparingInt(PetEntity::getPetId))
                         .collect(Collectors.toList());
-        if(cats.size()==0)
+        if(cats.isEmpty())
         {
             fail("There is 0 remaining cats in the inventory. Test cannot be executed");
         }
+
         Random random = new Random();
         int index = random.nextInt( cats.size());
 
@@ -71,13 +72,14 @@ public class DeletePetEntityTests
                     .extract()
                     .jsonPath()
                     .getObject(".", PetEntity.class);
+
         PetStoreReader psReader = new PetStoreReader();
         List<PetEntity> actualResults = psReader.readJsonFromFile();
         List<DynamicTest> testResults= Arrays.asList(
                 DynamicTest.dynamicTest("Size of results test[" + (expectedResults.size() - 1) + "]",
                         ()-> assertEquals((expectedResults.size() - 1), actualResults.size())),
                 DynamicTest.dynamicTest("Pet Item Not in list[" + deletedPet.getPetId() + "]",
-                        ()-> assertTrue(!actualResults.contains(deletedPet)))
+                        ()-> assertFalse(actualResults.contains(deletedPet)))
                 );
         return testResults.stream();
     }

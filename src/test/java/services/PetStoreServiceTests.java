@@ -15,7 +15,6 @@ import com.petstore.exceptions.PetTypeNotSupportedException;
 import com.petstoreservices.exceptions.PetDataStoreException;
 import com.petstoreservices.exceptions.PetInventoryFileNotCreatedException;
 import com.petstoreservices.exceptions.PetStoreAnimalTypeException;
-import com.petstoreservices.exceptions.RequestBodyException;
 import com.petstoreservices.repository.PetRepository;
 import com.petstoreservices.service.PetInventoryService;
 import org.junit.jupiter.api.*;
@@ -53,11 +52,10 @@ public class PetStoreServiceTests
 
     private List<PetEntity> myPets;
 
-    private PetEntity newDogItem;
-
 
     @BeforeEach
-    public void init() throws PetDataStoreException {
+    public void init()
+    {
         myPets = new ArrayList<PetEntity>(Arrays.asList(
                 new DogEntity(AnimalType.DOMESTIC, FUR, Gender.MALE, Breed.MALTESE,
                         new BigDecimal("750.00"), 3),
@@ -90,42 +88,8 @@ public class PetStoreServiceTests
                                 .anyMatch(c -> c.getPetId()== 3&& c.getPetType() == PetType.DOG
                                         && c.getGender() ==Gender.MALE && c.getBreed() == Breed.MALTESE))),
                 DynamicTest.dynamicTest("Pet item with Cat id 1 Not Found",
-                        ()-> assertTrue(foundPetList.contains(myPets.get(3))==false)));
+                        ()-> assertFalse(foundPetList.contains(myPets.get(3)))));
         verify(petRepository).getPetInventory();
-        return inventoryTests.stream();
-    }
-
-    @TestFactory
-    @Order(3)
-    @DisplayName("Validate Add DOG POST Test")
-    public Stream<DynamicTest> postPetTest() throws
-            RequestBodyException, PetInventoryFileNotCreatedException, PetStoreAnimalTypeException,
-            PetTypeNotSupportedException, PetDataStoreException {
-
-        Mockito.doReturn(myPets).when(petRepository).getPetInventory(); //mock the getInventory Repo
-
-        newDogItem = new DogEntity(AnimalType.DOMESTIC, FUR, Gender.FEMALE, Breed.GERMAN_SHEPHERD,
-                new BigDecimal("225.00"), 5);
-
-        List<PetEntity> sortedPets = myPets.stream()
-                .filter(p -> p.getPetType().equals(PetType.DOG))
-                .sorted(Comparator.comparingInt(PetEntity::getPetId))
-                .collect(Collectors.toList());
-
-        Mockito.lenient().doReturn(newDogItem).when(this.petRepository).createPetEntity(newDogItem,sortedPets);
-
-        PetEntity aEntity = this.petService.addInventory(PetType.DOG, newDogItem);
-       // System.out.println("say size" + sortedPets.size());
-        System.out.println("say what" + aEntity.getPetType());
-        List<DynamicTest> inventoryTests = Arrays.asList(
-                DynamicTest.dynamicTest("Pet item with Dog id 2",
-                        ()-> assertEquals(5, aEntity.getPetId())),
-                DynamicTest.dynamicTest("Dog breed",
-                        ()-> assertTrue(AnimalType.DOMESTIC == aEntity.getAnimalType())),
-                DynamicTest.dynamicTest("Dog Gender",
-                        ()-> assertTrue(Gender.FEMALE == aEntity.getGender())));
-        //verify(petRepository, times(1)).getPetInventory();
-
         return inventoryTests.stream();
     }
 
@@ -157,5 +121,39 @@ public class PetStoreServiceTests
                 DynamicTest.dynamicTest("Dog Gender[" + Gender.MALE + "]",
                         ()-> assertSame(Gender.MALE, removeEntity.getGender())));
         return removedInventoryTests.stream();
+    }
+
+    @TestFactory
+    @Order(3)
+    @DisplayName("Validate Add DOG POST Test")
+    public Stream<DynamicTest> postPetTest() throws
+            PetInventoryFileNotCreatedException, PetStoreAnimalTypeException,
+            PetTypeNotSupportedException, PetDataStoreException
+    {
+        Mockito.doReturn(myPets).when(petRepository).getPetInventory(); //mock the getInventory Repo
+
+        PetEntity newDogItem = new DogEntity(AnimalType.DOMESTIC, FUR, Gender.FEMALE, Breed.GERMAN_SHEPHERD,
+                new BigDecimal("225.00"), 5);
+
+        List<PetEntity> sortedPets = myPets.stream()
+                .filter(p -> p.getPetType().equals(PetType.DOG))
+                .sorted(Comparator.comparingInt(PetEntity::getPetId))
+                .collect(Collectors.toList());
+
+        Mockito.lenient().doReturn(newDogItem).when(this.petRepository).createPetEntity(newDogItem,sortedPets);
+
+        PetEntity aEntity = this.petService.addInventory(PetType.DOG, newDogItem);
+       // System.out.println("say size" + sortedPets.size());
+        System.out.println("say what" + aEntity.getPetType());
+        List<DynamicTest> inventoryTests = Arrays.asList(
+                DynamicTest.dynamicTest("Pet item with Dog id 2",
+                        ()-> assertEquals(5, aEntity.getPetId())),
+                DynamicTest.dynamicTest("Dog breed",
+                        ()-> assertSame(AnimalType.DOMESTIC, aEntity.getAnimalType())),
+                DynamicTest.dynamicTest("Dog Gender",
+                        ()-> assertSame(Gender.FEMALE, aEntity.getGender())));
+        //verify(petRepository, times(1)).getPetInventory();
+
+        return inventoryTests.stream();
     }
 }

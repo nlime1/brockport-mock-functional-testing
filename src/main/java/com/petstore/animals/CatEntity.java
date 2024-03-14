@@ -1,8 +1,5 @@
 package com.petstore.animals;
 
-
-
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.SerializedName;
 import com.petstore.AnimalType;
 import com.petstore.PetEntity;
@@ -79,11 +76,11 @@ public class CatEntity extends PetEntity {
     }
 
     /**
-     * Depending if the cat is domestic, wild, or neither what can the say
+     * Dependent if the cat is domestic, wild, or neither what can the say
      * @return what cats would speak
      */
     public String speaks() {
-        String language;
+
         switch (this.animalType) {
             case DOMESTIC:
                 speaks = "The cat goes prr! prr!";
@@ -102,14 +99,8 @@ public class CatEntity extends PetEntity {
         return "Cats have " + super.getLegs() + " legs!";
     }
 
-
-
     public String typeOfPet() {
         return "The type of pet is " + petType + "!";
-    }
-
-    public AnimalType getAnimalType() {
-        return super.animalType;
     }
 
     @Override

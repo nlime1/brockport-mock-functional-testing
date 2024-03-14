@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 /**
  * Pet Inventory Service.  This service currently supports
  * Adding a single pet, removing a single pet, and retrieving the list/
- * The service also keeps up to data an inventory data de-limited file
+ * The service also keeps up inventory data in json file
  */
 @Service
 public class PetInventoryService {
@@ -38,7 +38,7 @@ public class PetInventoryService {
 
     /**
      *  Retrieve the pet store Inventory of pets
-     * @return
+     * @return list of {@link PetEntity} that represent the inventory
      * @throws PetDataStoreException - Issue with file format, reading the file, or file is not present
      */
     public List<PetEntity> getInventory() throws PetDataStoreException {
@@ -64,14 +64,12 @@ public class PetInventoryService {
      * @param petType - type of pet to be added
      * @param newPetRestItem - the Rest Request body representation
      * @return - return the Pet
-     * @throws PetTypeNotSupportedException - Pet type is not supported by pet store ex{WILD and FARM}
-     * @throws PetStoreAnimalTypeException - Invalid Pet store type
      * @throws PetInventoryFileNotCreatedException - pet inventory file could not be created
      * @throws PetDataStoreException - Issue with file format, reading the file, or file is not present
      */
     public PetEntity addInventory(PetType petType, PetEntity newPetRestItem)
-            throws PetStoreAnimalTypeException, PetTypeNotSupportedException,
-        PetInventoryFileNotCreatedException, PetDataStoreException {
+            throws PetInventoryFileNotCreatedException, PetDataStoreException
+    {
         List<PetEntity> sortedPets = this.petRepo.getPetInventory().stream()
                 .filter(p -> p.getPetType().equals(petType))
                 .sorted(Comparator.comparingInt(PetEntity::getPetId))
@@ -92,13 +90,14 @@ public class PetInventoryService {
      */
     public PetEntity removeInventoryByIDAndPetType(PetType petType, int petId)
             throws DuplicatePetStoreRecordException, PetNotFoundSaleException,
-            PetInventoryFileNotCreatedException, PetDataStoreException {
+            PetInventoryFileNotCreatedException, PetDataStoreException
+    {
         PetEntity removeItem = this.petRepo.removeEntity(this.findPetByPetTypeAndPetId(petType, petId));
         return removeItem;
     }
 
     /**
-     * Search list for a pet type and pet Id
+     * Search list for a pet type and pet id
      * @param petType - Need the PetType to filter the store
      * @param petId - each pet id is unique per pet type
      * @return - Return the Pet found

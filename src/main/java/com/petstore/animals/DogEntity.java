@@ -1,8 +1,6 @@
 package com.petstore.animals;
 
 
-
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.SerializedName;
 import com.petstore.AnimalType;
 import com.petstore.PetEntity;
@@ -96,12 +94,6 @@ public class DogEntity extends PetEntity {
     private String numberOfLegs()
     {
         return "Dogs have " + super.legs + " legs!";
-    }
-
-
-
-    public AnimalType getAnimalType() {
-        return this.animalType;
     }
 
     @Override

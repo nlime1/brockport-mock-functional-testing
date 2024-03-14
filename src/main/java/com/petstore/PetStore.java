@@ -1,18 +1,9 @@
 package com.petstore;
 
 
-import com.petstore.animals.CatEntity;
-import com.petstore.animals.DogEntity;
-import com.petstore.animals.attributes.PetType;
-import com.petstore.exceptions.DuplicatePetStoreRecordException;
-import com.petstore.exceptions.PetNotFoundSaleException;
-
-
 import java.util.ArrayList;
 
 import java.util.List;
-
-import java.util.stream.Collectors;
 
 /**
  * Pet Store which holds and controls the pet inventory.
@@ -22,7 +13,7 @@ public class PetStore
 {
     private List<PetEntity> petInventoryList;
 
-    private List<PetEntity> petsSold; //not implemented
+    private final List<PetEntity> petsSold; //not implemented
 
     public PetStore()
     {
@@ -41,7 +32,7 @@ public class PetStore
         this.petInventoryList = petInventoryList;
     }
 
-    /**
+    /*
      * Remove pet items from the petsForSale list
      * @param soldPet - pet which is being removed from inventory
      * @return - return the pet which was removed
@@ -63,7 +54,7 @@ public class PetStore
         return tmpPet;
     }*/
 
-    /**
+    /*
      * Add item to the inventory list
      * @param pet {@link PetEntity} to be added to the inventory
 
@@ -73,7 +64,7 @@ public class PetStore
         this.petInventoryList.add(pet);
     } */
 
-    /**
+    /*
      * Remove the Pet from the pet store by id and type of pet
      * @param petType - the pet type
      * @param petStoreId - unique pet id by pet type
@@ -93,7 +84,7 @@ public class PetStore
        this.petInventoryList = listForFiltering;
     }*/
 
-    /**
+    /*
      * Identify the Dog to remove from the inventory list
      * @param soldDog the {@link DogEntity} that will be sold
      * @return the {@link DogEntity} that was sold
@@ -119,7 +110,7 @@ public class PetStore
         }
     } */
 
-    /**
+    /*
      * Identify the cat which was sold from the inventory list
 
      * @return the {@link CatEntity} that was sold

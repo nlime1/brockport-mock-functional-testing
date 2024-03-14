@@ -58,30 +58,5 @@
     "breed": "GERMAN_SHEPHERD",
     "hasLegs": true,
     "isMammal": false
-  },
-  {
-    "cost": 225.00,
-    "petId": 5,
-    "legs": 4,
-    "animalType": "DOMESTIC",
-    "petType": "DOG",
-    "skinType": "FUR",
-    "gender": "FEMALE",
-    "breed": "GERMAN_SHEPHERD",
-    "hasLegs": true,
-    "isMammal": false
-  },
-  {
-    "speaks": "The dog goes woof! woof!",
-    "cost": 225.00,
-    "petId": 6,
-    "legs": 4,
-    "animalType": "DOMESTIC",
-    "petType": "DOG",
-    "skinType": "FUR",
-    "gender": "FEMALE",
-    "breed": "GERMAN_SHEPHERD",
-    "hasLegs": true,
-    "isMammal": false
   }
 ]
