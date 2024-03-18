@@ -88,14 +88,16 @@ public class DeletePetEntityTests
     public Stream<DynamicTest> deleteInventoryMissingPetEntityTest()
     {
         RestAssured.registerParser("application/json", Parser.JSON);
-        BadRequestResponseBody body = given()
-                .headers(headers)
-                .delete("inventory/search/")
+        BadRequestResponseBody body =
+                given()
+                    .headers(headers)
+                .when()
+                    .delete("inventory/search/")
                 .then()
-                .log().all()
-                .assertThat().statusCode(404)
-                .extract()
-                .jsonPath().getObject(".", BadRequestResponseBody.class);
+                    .log().all()
+                    .assertThat().statusCode(404)
+                    .extract()
+                    .jsonPath().getObject(".", BadRequestResponseBody.class);
 
         return body.executeTests("Not Found", "No static resource inventory/search.",
                 "/inventory/search/", 404).stream();
@@ -105,15 +107,17 @@ public class DeletePetEntityTests
     public Stream<DynamicTest> deleteInventoryInvalidPetEntityTest()
     {
         RestAssured.registerParser("application/json", Parser.JSON);
-        BadRequestResponseBody body = given()
-                .headers(headers)
-                .delete("inventory/search/FROGGER")
+        BadRequestResponseBody body =
+                given()
+                    .headers(headers)
+                .when()
+                    .delete("inventory/search/FROGGER")
                 .then()
-                .log().all()
-                .assertThat().statusCode(400)
-                .extract()
-                .jsonPath()
-                .getObject(".", BadRequestResponseBody.class);
+                    .log().all()
+                    .assertThat().statusCode(400)
+                    .extract()
+                    .jsonPath()
+                    .getObject(".", BadRequestResponseBody.class);
 
         return body.executeTests("Bad Request", "Failed to convert value of type 'java.lang.String' to " +
                         "required type 'com.petstore.animals.attributes.PetType'; Failed to convert from type " +
@@ -132,15 +136,16 @@ public class DeletePetEntityTests
                         .sorted(Comparator.comparingInt(PetEntity::getPetId))
                         .collect(Collectors.toList());
         int index =  cats.size() + 100;
-        String uri = "inventory/petType/DOG/petId/" + index;
-        BadRequestResponseBody body = given()
-                .headers(headers)
-                .delete("inventory/search/" + index)
+        BadRequestResponseBody body =
+                given()
+                    .headers(headers)
+                .when()
+                        .delete("inventory/search/" + index)
                 .then()
-                .log().all()
-                .assertThat().statusCode(400)
-                .extract()
-                .jsonPath().getObject(".", BadRequestResponseBody.class);
+                    .log().all()
+                    .assertThat().statusCode(400)
+                    .extract()
+                    .jsonPath().getObject(".", BadRequestResponseBody.class);
 
         return body.executeTests("Bad Request", "Failed to convert value of type 'java.lang.String' " +
                "to required type 'com.petstore.animals.attributes.PetType'; Failed to convert from type " +

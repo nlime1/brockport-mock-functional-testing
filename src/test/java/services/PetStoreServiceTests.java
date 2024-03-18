@@ -11,11 +11,9 @@ import com.petstore.animals.attributes.PetType;
 import com.petstore.animals.attributes.Skin;
 import com.petstore.exceptions.DuplicatePetStoreRecordException;
 import com.petstore.exceptions.PetNotFoundSaleException;
-import com.petstore.exceptions.PetTypeNotSupportedException;
+
 import com.petstoreservices.exceptions.PetDataStoreException;
 import com.petstoreservices.exceptions.PetInventoryFileNotCreatedException;
-import com.petstoreservices.exceptions.PetStoreAnimalTypeException;
-import com.petstoreservices.exceptions.RequestBodyException;
 import com.petstoreservices.repository.PetRepository;
 import com.petstoreservices.service.PetInventoryService;
 import org.junit.jupiter.api.*;
@@ -100,8 +98,7 @@ public class PetStoreServiceTests
     @Order(3)
     @DisplayName("Validate Add DOG POST Test")
     public Stream<DynamicTest> postPetTest() throws
-            RequestBodyException, PetInventoryFileNotCreatedException, PetStoreAnimalTypeException,
-            PetTypeNotSupportedException, PetDataStoreException {
+            PetInventoryFileNotCreatedException, PetDataStoreException {
 
         Mockito.doReturn(myPets).when(petRepository).getPetInventory(); //mock the getInventory Repo
 
