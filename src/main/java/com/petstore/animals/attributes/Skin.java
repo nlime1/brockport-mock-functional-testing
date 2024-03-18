@@ -17,8 +17,9 @@ public enum Skin {
 
     UNKNOWN;
     private String skinType;
+
     public String skinType() {
-        return this.skinType();
+        return this.skinType;
     }
 
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)

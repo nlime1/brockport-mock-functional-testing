@@ -35,7 +35,7 @@ public class PetInventoryController
 
     /**
      * Get Request for inventory
-     * url: http://localhost:8080/inventory
+     * <br>url: <a href="http://localhost:8080/inventory">http://localhost:8080/inventory</a>
      * @return - the inventory body in json format
      */
     @RequestMapping(value = "/inventory",
@@ -56,7 +56,7 @@ public class PetInventoryController
 
     /**
      * GetRequest for a specific pet type and id
-     * url example: http://localhost:8080/inventory/search?petType=DOG&petId=2
+     * <br>url: <a href="http://localhost:8080/inventory/search?petType=DOG&petId=2">http://localhost:8080/inventory/search?petType=DOG&petId=2</a>
      * @return - Http status and response body
      */
     @RequestMapping(value = "/inventory/search",
@@ -84,7 +84,7 @@ public class PetInventoryController
 
     /**
      * GetRequest for a specific pet type
-     * url example: http://localhost:8080/inventory/search/DOG
+     * <br>url: <a href="http://localhost:8080/inventory/search/DOG">http://localhost:8080/inventory/search/DOG</a>
      * @return - Http status and response body
      */
     @RequestMapping("/inventory/search/{petType}")
@@ -113,7 +113,7 @@ public class PetInventoryController
 
     /**
      * Post a request to add a pet item
-     * url = http://localhost:8080/inventory/petType/DOG
+     * <br>url: <a href="http://localhost:8080/inventory/petType/DOG">http://localhost:8080/inventory/petType/DOG</a>
      * <pre>
      * requestbody={
      *     "cost":1050.00,
@@ -138,8 +138,7 @@ public class PetInventoryController
         try{
             responseBody = gson.toJson(this.inventoryService.addInventory(petType, petItem));
             return new ResponseEntity<>(responseBody, HttpStatus.OK);
-        }catch(PetTypeNotSupportedException | PetStoreAnimalTypeException |
-               PetInventoryFileNotCreatedException e)
+        }catch(PetInventoryFileNotCreatedException e)
         {
             responseBody = e.getMessage();
             return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
@@ -153,7 +152,7 @@ public class PetInventoryController
 
     /**
      * Update the inventory of the petstore.
-     * The url used is http://localhost:8080/inventory/update?petType=DOG&petId=4
+     * <br>url: <a href="http://localhost:8080/inventory/update?petType=DOG&petId=4">http://localhost:8080/inventory/update?petType=DOG&petId=4</a>
      * <pre>
      * requestbody={
      *      "cost":1050.00
@@ -195,7 +194,7 @@ public class PetInventoryController
 
     /**
      * Remove Item from pet store inventory
-     * url request example http://localhost:8080/inventory/petType/DOG/petId/4
+     * <br>url: <a href="http://localhost:8080/inventory/petType/DOG/petId/4">http://localhost:8080/inventory/petType/DOG/petId/4</a>
      *
      * @param petType - the pet type
      * @param petId - unique id

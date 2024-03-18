@@ -4,10 +4,9 @@ package com.petstore;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.petstoreservices.exceptions.PetDataStoreException;
-import org.json.JSONException;
-import org.json.simple.parser.ParseException;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,9 +31,8 @@ public class PetStoreReader
         List<PetEntity> entityList = new ArrayList<PetEntity>();
         try {
 
-            InputStream stream = new FileInputStream(
-                    new File("./datastore/application/petstore.json"));
-            JsonReader reader = new JsonReader(new InputStreamReader(stream, "UTF-8"));
+            InputStream stream = new FileInputStream("./datastore/application/petstore.json");
+            JsonReader reader = new JsonReader(new InputStreamReader(stream, StandardCharsets.UTF_8));
             Gson gson = new Gson();
             // Read file in stream mode
             reader.beginArray();

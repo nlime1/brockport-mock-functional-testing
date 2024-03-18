@@ -13,8 +13,6 @@ import io.restassured.http.Headers;
 import io.restassured.parsing.Parser;
 import io.restassured.response.Response;
 
-import org.json.JSONException;
-import org.json.simple.parser.ParseException;
 import org.junit.jupiter.api.*;
 
 
@@ -54,7 +52,7 @@ public class GetInventoryByPetTypeTests
 
     @TestFactory
     @DisplayName("Pet Entity By Type[Dog] Tests")
-    public Stream<DynamicNode> getInventoryDogsTest() throws Exception
+    public Stream<DynamicNode> getInventoryDogsTest()
     {
         List<PetEntity> dogs =
                 expectedResults.stream()
@@ -86,7 +84,7 @@ public class GetInventoryByPetTypeTests
 
     @Test
     @DisplayName("Get Pet Entity By Type[Dog] Gherkin Tests")
-    public void getInventoryDogsGherkinTest() throws Exception
+    public void getInventoryDogsGherkinTest()
     {
         List<PetEntity> dogs =
                 expectedResults.stream()
@@ -129,7 +127,7 @@ public class GetInventoryByPetTypeTests
 
     @TestFactory
     @DisplayName("Get Pet Entity By Missing Pet Entity Tests")
-    public Stream<DynamicTest> getInventoryMissingPetEntityTest() throws Exception
+    public Stream<DynamicTest> getInventoryMissingPetEntityTest()
     {
         RestAssured.registerParser("application/json", Parser.JSON);
         BadRequestResponseBody body =
@@ -148,7 +146,7 @@ public class GetInventoryByPetTypeTests
     }
     @TestFactory
     @DisplayName("Get Pet Entity By Invalid Pet Entity Tests")
-    public Stream<DynamicTest> getInventoryInvalidPetEntityTest() throws Exception
+    public Stream<DynamicTest> getInventoryInvalidPetEntityTest()
     {
         RestAssured.registerParser("application/json", Parser.JSON);
         BadRequestResponseBody body =

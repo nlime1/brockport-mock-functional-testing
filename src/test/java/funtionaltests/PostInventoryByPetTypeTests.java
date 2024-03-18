@@ -13,16 +13,10 @@ import io.restassured.http.ContentType;
 import io.restassured.http.Header;
 import io.restassured.http.Headers;
 import io.restassured.parsing.Parser;
-import org.json.JSONException;
-import org.json.simple.parser.ParseException;
 import org.junit.jupiter.api.*;
 
-import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -35,10 +29,9 @@ import static io.restassured.RestAssured.given;
  */
 public class PostInventoryByPetTypeTests
 {
-    private List<PetEntity> expectedResults;
     private static Headers headers;
     @BeforeEach
-    public void retrieveDataStore() throws JSONException, IOException, ParseException
+    public void retrieveDataStore()
     {
         RestAssured.baseURI  = "http://localhost:8080/";
 
@@ -68,7 +61,7 @@ public class PostInventoryByPetTypeTests
                         .getObject(".", PetEntity.class);
 
         PetStoreReader psReader = new PetStoreReader();
-        expectedResults = psReader.readJsonFromFile();
+        List<PetEntity> expectedResults = psReader.readJsonFromFile();
         List<PetEntity> actualDogs =
                 expectedResults.stream()
                         .filter(p -> p.getPetType().equals(PetType.DOG) && p.getPetId()==itemCreated.getPetId())
@@ -83,7 +76,7 @@ public class PostInventoryByPetTypeTests
 
     @TestFactory
     @DisplayName("Post Pet Entity By Missing Pet Entity Tests")
-    public Stream<DynamicTest> postInventoryMissingPetEntityTest() throws Exception
+    public Stream<DynamicTest> postInventoryMissingPetEntityTest()
     {
         RestAssured.registerParser("application/json", Parser.JSON);
         BadRequestResponseBody body =
@@ -107,7 +100,7 @@ public class PostInventoryByPetTypeTests
     }
     @TestFactory
     @DisplayName("Post Pet Entity By Invalid Pet Entity Tests")
-    public Stream<DynamicTest> postInventoryInvalidPetEntityTest() throws Exception
+    public Stream<DynamicTest> postInventoryInvalidPetEntityTest()
     {
        RestAssured.registerParser("application/json", Parser.JSON);
        BadRequestResponseBody body =  given()

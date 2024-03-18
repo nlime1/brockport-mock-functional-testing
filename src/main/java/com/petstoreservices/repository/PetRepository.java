@@ -16,14 +16,12 @@ import com.petstoreservices.exceptions.PetInventoryFileNotCreatedException;
 
 import com.petstoreservices.exceptions.UpdatePetException;
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONException;
-import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Repository;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import java.io.Writer;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -123,20 +121,25 @@ public class PetRepository {
             PetNotFoundSaleException, PetInventoryFileNotCreatedException, PetDataStoreException
     {
         PetStoreReader psReader = new PetStoreReader();
+
         List<PetEntity> currentPetList = psReader.readJsonFromFile();
+
         List<PetEntity> otherPets = currentPetList.stream()
                 .filter(p -> (p.getPetType() != petEntity.getPetType()))
                 .collect(Collectors.toList());
+
         List<PetEntity> newPetList =  currentPetList.stream()
                 .filter(p -> ((p.getPetType() == petEntity.getPetType())
                         && (p.getPetId() != petEntity.getPetId())))
                 .collect(Collectors.toList());
+
         List<PetEntity> foundPetItems = currentPetList.stream()
                 .filter(p -> ((p.getPetType() == petEntity.getPetType())
                         && (p.getPetId() == petEntity.getPetId())))
                 .collect(Collectors.toList());
         newPetList.addAll(otherPets);
-        if (foundPetItems.size()==0)
+
+        if (foundPetItems.isEmpty())
         {
             throw new PetNotFoundSaleException("The Pet is not part of the pet store!!");
         }else
@@ -150,30 +153,15 @@ public class PetRepository {
      * Convert the pet inventory list to json flat file
      * @ throws PetInventoryFileNotCreatedException - Issue converting the PetEntity List to json format
      */
-    public void convertListToJsonFlatFile(List<PetEntity> newList) throws PetInventoryFileNotCreatedException {
-
+    public void convertListToJsonFlatFile(List<PetEntity> newList) throws PetInventoryFileNotCreatedException
+    {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        File file = new File("./datastore/application/petstore.json");//this would normally be a config
-        try{
-            if (!file.exists()){
-                if(!file.createNewFile())
-                {
-                    throw new PetInventoryFileNotCreatedException("File could not be created");
-                }
-            }else {
-                if(file.delete())
-                {
-                    this.convertListToJsonFlatFile(newList);
-                }
-
-            }
-            FileWriter writer = new FileWriter(file);
-            writer.write(gson.toJson(newList));
+        try {
+            Writer writer = new FileWriter("./datastore/application/petstore.json");    //this would normally be a config
+            gson.toJson(newList, writer);
             writer.flush();
             writer.close();
-        }catch(IOException ex)
-        {
-            ex.printStackTrace();
+        } catch (IOException e) {
             throw new PetInventoryFileNotCreatedException("Issue writing the file");
         }
     }

@@ -10,7 +10,6 @@ import com.petstore.animals.attributes.Breed;
 import com.petstore.animals.attributes.Gender;
 import com.petstore.animals.attributes.PetType;
 import com.petstore.animals.attributes.Skin;
-import com.petstore.exceptions.DuplicatePetStoreRecordException;
 import com.petstore.exceptions.PetNotFoundSaleException;
 
 import com.petstoreservices.exceptions.PetDataStoreException;
@@ -93,8 +92,8 @@ public class PetRepositoryTest
     /**
      * Limitations to test factory as it does not instantiate before all
      * @return list of {@link DynamicNode} that contains the test results
-     * @throws DuplicatePetStoreRecordException if duplicate pet record is found
-     * @throws PetNotFoundSaleException if pet is not found
+     * @throws PetDataStoreException if there is issue with pet records
+     * @throws PetInventoryFileNotCreatedException if the datasource (represented in json file) is not found
      */
     @TestFactory
     @DisplayName("Sale of Sphynx Remove Item Test2")
@@ -123,6 +122,7 @@ public class PetRepositoryTest
 
         return nodes.stream();
     }
+
     // Validation
     @Test
     @DisplayName("Pet not found exception test")
@@ -131,8 +131,11 @@ public class PetRepositoryTest
         PetEntity greyHound = new DogEntity(AnimalType.DOMESTIC, Skin.UNKNOWN, Gender.FEMALE, Breed.GREY_HOUND,
                 new BigDecimal("667.00"),1002);
         String expectedMessage = "The Pet is not part of the pet store!!";
-        Exception exception = assertThrows(PetNotFoundSaleException.class, () ->{
-            petRepository.removeEntity(greyHound);});
+        Exception exception = assertThrows(PetNotFoundSaleException.class,
+                                            () -> {
+                                                    petRepository.removeEntity(greyHound);
+                                                  }
+                                          );
         assertEquals(expectedMessage, exception.getMessage(), "Item was unexpectedly found in inventory!");
     }
 
