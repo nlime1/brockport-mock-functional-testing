@@ -44,6 +44,7 @@ public class GetInventoryByPetTypeTests
     public void retrieveDataStore() throws PetDataStoreException {
         PetStoreReader psReader = new PetStoreReader();
         expectedResults = psReader.readJsonFromFile();
+
         RestAssured.baseURI  = "http://localhost:8080/";
 
         Header contentType = new Header("Content-Type", ContentType.JSON.toString());
@@ -96,8 +97,9 @@ public class GetInventoryByPetTypeTests
         List<PetEntity> actualResults =
                given()
                        .headers(headers)
+               .when()
                        .get("inventory/search/DOG")
-                       .then()
+               .then()
                        .log().all()
                        .assertThat().statusCode(200)
                        .extract()
@@ -130,10 +132,12 @@ public class GetInventoryByPetTypeTests
     public Stream<DynamicTest> getInventoryMissingPetEntityTest() throws Exception
     {
         RestAssured.registerParser("application/json", Parser.JSON);
-        BadRequestResponseBody body = given()
+        BadRequestResponseBody body =
+           given()
                 .headers(headers)
+           .when()
                 .get("inventory/search/")
-                .then()
+           .then()
                 .log().all()
                 .assertThat().statusCode(404)
                 .extract()
@@ -147,10 +151,12 @@ public class GetInventoryByPetTypeTests
     public Stream<DynamicTest> getInventoryInvalidPetEntityTest() throws Exception
     {
         RestAssured.registerParser("application/json", Parser.JSON);
-        BadRequestResponseBody body = given()
+        BadRequestResponseBody body =
+             given()
                 .headers(headers)
+             .when()
                 .get("inventory/search/FROGGER")
-                .then()
+             .then()
                 .log().all()
                 .assertThat().statusCode(400)
                 .extract()
