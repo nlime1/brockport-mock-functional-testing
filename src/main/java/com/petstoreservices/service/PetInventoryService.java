@@ -55,9 +55,9 @@ public class PetInventoryService {
      * @throws DuplicatePetStoreRecordException - duplicate record found
      * @throws PetDataStoreException - Issue with file format, reading the file, or file is not present
      */
-    public PetEntity findPetByIdAndType(PetType petType, int petId) throws PetNotFoundSaleException,
+    public PetEntity getPetByIdAndType(PetType petType, int petId) throws PetNotFoundSaleException,
             DuplicatePetStoreRecordException, PetDataStoreException {
-        return this.findPetByPetTypeAndPetId(petType, petId);
+        return this.petRepo.findPetByPetTypeAndPetId(petType, petId);
     }
     /**
      * Add a new item to the inventory list
@@ -92,41 +92,11 @@ public class PetInventoryService {
             throws DuplicatePetStoreRecordException, PetNotFoundSaleException,
             PetInventoryFileNotCreatedException, PetDataStoreException
     {
-        PetEntity removeItem = this.petRepo.removeEntity(this.findPetByPetTypeAndPetId(petType, petId));
+        PetEntity removeItem = this.petRepo.removeEntity(this.petRepo.findPetByPetTypeAndPetId(petType, petId));
         return removeItem;
     }
 
-    /**
-     * Search list for a pet type and pet id
-     * @param petType - Need the PetType to filter the store
-     * @param petId - each pet id is unique per pet type
-     * @return - Return the Pet found
-     * @throws PetNotFoundSaleException - Pet is not found
-     * @throws DuplicatePetStoreRecordException - Duplicate record found in the store
-     * @throws PetDataStoreException - Issue with file format, reading the file, or file is not present
-     */
-    private PetEntity findPetByPetTypeAndPetId(PetType petType, int petId) throws PetNotFoundSaleException,
-            DuplicatePetStoreRecordException, PetDataStoreException {
-        List<PetEntity> filteredPets =  this.petRepo.getPetInventory().stream()
-                .filter(p -> p.getPetType().equals(petType))
-                .filter(id -> id.getPetId()==petId)
-                .collect(Collectors.toList());
-        if(filteredPets.isEmpty())
-        {
-            throw new PetNotFoundSaleException("0 results found for search criteria for pet id[" + petId + "] " +
-                    "petType[" + petType +"] Please try again!!");
-        }
-        else if(filteredPets.size() >1)
-        {
-            throw new DuplicatePetStoreRecordException("Should only of retrieved one item from the pet store and " +
-                    "found duplicate records in the results.  This list size was[" + filteredPets.size() +
-                    "] for pet id[" + petId + "] petType[" + petType +"]");
-        }
-        else{
-            return filteredPets.get(0);
-        }
 
-    }
 
     /**
      * Search petsForSale list for matches to PetType
@@ -164,7 +134,7 @@ public class PetInventoryService {
             PetStoreAnimalTypeException, PetInventoryFileNotCreatedException, PetDataStoreException {
         PetEntity updatedPetItem = null;
         try{
-            updatedPetItem = this.findPetByPetTypeAndPetId(petType, petId);
+            updatedPetItem = this.petRepo.findPetByPetTypeAndPetId(petType, petId);
             this.petRepo.removeEntity(updatedPetItem);
             updatedPetItem = this.petRepo.updatePetEntity(petItemUpdate, updatedPetItem);
 

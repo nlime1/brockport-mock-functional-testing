@@ -8,10 +8,11 @@ import com.petstore.animals.attributes.Breed;
 import com.petstore.animals.attributes.Gender;
 import com.petstore.animals.attributes.PetType;
 import com.petstore.animals.attributes.Skin;
+import jakarta.persistence.Entity;
 
 
 import java.math.BigDecimal;
-
+@Entity
 public class DogEntity extends PetEntity {
 
     /* Properties */

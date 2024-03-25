@@ -70,7 +70,7 @@ public class PetInventoryController
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try{
             responseBody = gson.toJson(
-                       this.inventoryService.findPetByIdAndType(petType, petId));
+                       this.inventoryService.getPetByIdAndType(petType, petId));
             return new ResponseEntity<>(responseBody, HttpStatus.OK);
         }catch(DuplicatePetStoreRecordException | PetNotFoundSaleException e)
         {

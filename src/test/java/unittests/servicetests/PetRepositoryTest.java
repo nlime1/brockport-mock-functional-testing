@@ -28,6 +28,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.DynamicContainer.dynamicContainer;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
+/**
+ * Pet Repository tests
+ */
 public class PetRepositoryTest
 {
     private static PetRepository petRepository;

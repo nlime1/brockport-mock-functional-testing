@@ -9,6 +9,7 @@ import com.petstore.PetStoreReader;
 
 
 import com.petstore.animals.attributes.PetType;
+import com.petstore.exceptions.DuplicatePetStoreRecordException;
 import com.petstore.exceptions.PetNotFoundSaleException;
 import com.petstore.exceptions.PetTypeNotSupportedException;
 import com.petstoreservices.exceptions.PetDataStoreException;
@@ -148,7 +149,47 @@ public class PetRepository {
             return foundPetItems.get(0);
         }
     }
+    /**
+     * Retrieve the pet inventory file and return it in a form of list<PetEntity>
+     * @return - Remaining pet entity list
+     * @throws PetDataStoreException - Issue with file format, reading the file, or file is not present
+     */
+    public List<PetEntity> getPetInventory() throws PetDataStoreException {
 
+        PetStoreReader psReader = new PetStoreReader();
+        return psReader.readJsonFromFile();
+    }
+    /**
+     * Search list for a pet type and pet id
+     * @param petType - Need the PetType to filter the store
+     * @param petId - each pet id is unique per pet type
+     * @return - Return the Pet found
+     * @throws PetNotFoundSaleException - Pet is not found
+     * @throws DuplicatePetStoreRecordException - Duplicate record found in the store
+     * @throws PetDataStoreException - Issue with file format, reading the file, or file is not present
+     */
+    public PetEntity findPetByPetTypeAndPetId(PetType petType, int petId) throws PetNotFoundSaleException,
+            DuplicatePetStoreRecordException, PetDataStoreException {
+            List<PetEntity> filteredPets =  this.getPetInventory().stream()
+               .filter(p -> p.getPetType().equals(petType))
+               .filter(id -> id.getPetId()==petId)
+               .collect(Collectors.toList());
+
+        if(filteredPets.isEmpty())
+        {
+            throw new PetNotFoundSaleException("0 results found for search criteria for pet id[" + petId + "] " +
+                    "petType[" + petType +"] Please try again!!");
+        }
+        else if(filteredPets.size() >1)
+        {
+            throw new DuplicatePetStoreRecordException("Should only of retrieved one item from the pet store and " +
+                    "found duplicate records in the results.  This list size was[" + filteredPets.size() +
+                    "] for pet id[" + petId + "] petType[" + petType +"]");
+        }
+        else{
+            return filteredPets.get(0);
+        }
+    }
     /**
      * Convert the pet inventory list to json flat file
      * @ throws PetInventoryFileNotCreatedException - Issue converting the PetEntity List to json format
@@ -165,15 +206,6 @@ public class PetRepository {
             throw new PetInventoryFileNotCreatedException("Issue writing the file");
         }
     }
-    /**
-     * Retrieve the pet inventory file and return it in a form of list<PetEntity>
-     * @return - Remaining pet entity list
-     * @throws PetDataStoreException - Issue with file format, reading the file, or file is not present
-     */
-    public List<PetEntity> getPetInventory() throws PetDataStoreException {
 
-        PetStoreReader psReader = new PetStoreReader();
-        return psReader.readJsonFromFile();
-    }
 
 }

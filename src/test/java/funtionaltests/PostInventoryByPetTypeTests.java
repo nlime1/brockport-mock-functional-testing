@@ -69,6 +69,7 @@ public class PostInventoryByPetTypeTests
                         .collect(Collectors.toList());
 
         List<DynamicNode> testNodes = new ArrayList<DynamicNode>();
+
         testNodes.add(PetEntityValidator.addPetEntityBodyTests(Arrays.asList(itemCreated), actualDogs));
         return testNodes.stream();
 
