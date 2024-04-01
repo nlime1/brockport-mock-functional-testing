@@ -70,7 +70,7 @@ public class ArgumentMatcherTests
         ArgumentCaptor petEntityCaptor = ArgumentCaptor.forClass(PetType.class);
         ArgumentCaptor acInteger = ArgumentCaptor.forClass(Integer.class);
         //mock the repository method and provide a results
-        Mockito.lenient().doReturn(pet).when(petRepository).findPetByPetTypeAndPetId(PetType.DOG, 4);
+        Mockito.doReturn(pet).when(petRepository).findPetByPetTypeAndPetId(PetType.DOG, 4);
         //execute the service
         PetEntity foundEntity = petService.getPetByIdAndType(PetType.DOG, 4);
         //verify the petRepository has executed the query and capture the input params
@@ -115,12 +115,12 @@ public class ArgumentMatcherTests
         ArgumentCaptor acInteger = ArgumentCaptor.forClass(Integer.class);
 
         //mock the repository method and provide a results
-        Mockito.lenient().doReturn(pet1).when(petRepository).findPetByPetTypeAndPetId(PetType.DOG, 4);
+        Mockito.doReturn(pet1).when(petRepository).findPetByPetTypeAndPetId(PetType.DOG, 4);
         //execute the service
         PetEntity foundDogEntity = petService.getPetByIdAndType(PetType.DOG, 4);
 
         //mock the repository method and provide a results
-        Mockito.lenient().doReturn(pet2).when(petRepository).findPetByPetTypeAndPetId(PetType.CAT, 1);
+        Mockito.doReturn(pet2).when(petRepository).findPetByPetTypeAndPetId(PetType.CAT, 1);
         //execute the service
         PetEntity foundCatEntity = petService.getPetByIdAndType(PetType.CAT, 1);
 

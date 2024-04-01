@@ -140,7 +140,7 @@ public class PetStoreServiceTests
                 .collect(Collectors.toList());
 
         //mock the creation of the pet entity in the repository
-        Mockito.lenient().doReturn(newDogItem).when(this.petRepository).createPetEntity(newDogItem,sortedPets);
+        Mockito.doReturn(newDogItem).when(this.petRepository).createPetEntity(newDogItem,sortedPets);
 
         //execute the service
         PetEntity aEntity = this.petService.addInventory(PetType.DOG, newDogItem);
@@ -214,10 +214,10 @@ public class PetStoreServiceTests
                 .findFirst()
                 .orElse(null); //capture the item from the existing list in myPets
 
-        Mockito.lenient().doReturn(removedPetItem).when(petRepository).findPetByPetTypeAndPetId(PetType.DOG, 3); //mock the getInventory Repo
+        Mockito.doReturn(removedPetItem).when(petRepository).findPetByPetTypeAndPetId(PetType.DOG, 3); //mock the getInventory Repo
 
         //mock the removeEntity() repo and define the results
-        Mockito.lenient().doReturn(removedPetItem).when(this.petRepository).removeEntity(removedPetItem);
+        Mockito.doReturn(removedPetItem).when(this.petRepository).removeEntity(removedPetItem);
 
         //Execute the service and return the removeEntity id
         PetEntity removeEntity = petService.removeInventoryByIDAndPetType(PetType.DOG, removedPetItem.getPetId());

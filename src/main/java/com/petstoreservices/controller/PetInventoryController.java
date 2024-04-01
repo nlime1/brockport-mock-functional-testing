@@ -65,7 +65,6 @@ public class PetInventoryController
     public ResponseEntity<?> findPetByIdAndPetType(@RequestParam ("petType") PetType petType,
                                                    @RequestParam("petId") int petId)
     {
-        System.out.println("Entering findPetByIdAndPetType");
         String responseBody;
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try{
