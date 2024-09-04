@@ -8,6 +8,7 @@ import com.petstore.exceptions.DuplicatePetStoreRecordException;
 import com.petstore.exceptions.PetNotFoundSaleException;
 import com.petstore.exceptions.PetTypeNotSupportedException;
 import com.petstoreservices.exceptions.*;
+import com.petstoreservices.repository.IPetRepository;
 import com.petstoreservices.repository.PetRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,14 +29,22 @@ import java.util.stream.Collectors;
 public class PetInventoryService {
 
     @Autowired
-    private PetRepository petRepo;
+    private IPetRepository petRepo;
 
     public PetInventoryService()
     {
 
-//        petRepo = new PetRepository();
+       petRepo = new PetRepository();
     }
 
+    /**
+     * This is used to show stub
+     * @param repo
+     */
+    public PetInventoryService(IPetRepository repo)
+    {
+        petRepo = repo;
+    }
     /**
      *  Retrieve the pet store Inventory of pets
      * @return list of {@link PetEntity} that represent the inventory
@@ -92,7 +101,7 @@ public class PetInventoryService {
             throws DuplicatePetStoreRecordException, PetNotFoundSaleException,
             PetInventoryFileNotCreatedException, PetDataStoreException
     {
-        PetEntity removeItem = this.petRepo.removeEntity(this.petRepo.findPetByPetTypeAndPetId(petType, petId));
+        PetEntity removeItem = this.petRepo.removeEntity( this.petRepo.findPetByPetTypeAndPetId(petType, petId));
         return removeItem;
     }
 

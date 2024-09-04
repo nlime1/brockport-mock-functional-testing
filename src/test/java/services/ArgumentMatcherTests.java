@@ -1,5 +1,6 @@
 package services;
 
+import com.fasterxml.jackson.databind.introspect.POJOPropertyBuilder;
 import com.petstore.AnimalType;
 import com.petstore.PetEntity;
 import com.petstore.animals.CatEntity;
@@ -20,10 +21,12 @@ import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import java.util.stream.Stream;
 
 import static com.petstore.animals.attributes.Skin.FUR;
@@ -41,6 +44,8 @@ public class ArgumentMatcherTests
     private PetRepository petRepository;
 
     private List<PetEntity> myPets;
+
+    private static int  batchCounter;
     @BeforeEach
     public void init() throws PetDataStoreException
     {
@@ -165,4 +170,8 @@ public class ArgumentMatcherTests
         testResults.add(catResponseContainer);
         return testResults.stream();
     }
+
+
+
+
 }

@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
  * The Pet Repository initializes the pet inventory list and handles the conversion of the pet store list to json file
  */
 @Repository
-public class PetRepository {
+public class PetRepository implements IPetRepository {
 
 
 

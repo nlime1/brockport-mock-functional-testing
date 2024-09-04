@@ -1,13 +1,13 @@
 [
   {
-    "cost": 65.00,
-    "petId": 1,
+    "cost": 100.00,
+    "petId": 2,
     "legs": 4,
     "animalType": "DOMESTIC",
     "petType": "CAT",
-    "skinType": "HAIR",
-    "gender": "MALE",
-    "breed": "BURMESE",
+    "skinType": "UNKNOWN",
+    "gender": "FEMALE",
+    "breed": "SPHYNX",
     "hasLegs": true,
     "isMammal": false
   },
@@ -56,6 +56,18 @@
     "skinType": "FUR",
     "gender": "FEMALE",
     "breed": "GERMAN_SHEPHERD",
+    "hasLegs": true,
+    "isMammal": false
+  },
+  {
+    "cost": 225.00,
+    "petId": 1,
+    "legs": 4,
+    "animalType": "DOMESTIC",
+    "petType": "CAT",
+    "skinType": "FUR",
+    "gender": "FEMALE",
+    "breed": "SPHYNX",
     "hasLegs": true,
     "isMammal": false
   }

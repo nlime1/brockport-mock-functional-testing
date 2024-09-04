@@ -270,7 +270,76 @@ public class PetStoreServiceTests
         return testResultsList.stream();
     }
 
+    @TestFactory
+    @Order(3)
+    @DisplayName("Update Pet Item<Cat> in inventory test")
+    public Stream<DynamicNode> updatePetItemTest() throws Exception
+    {
+        Mockito.doReturn(myPets).when(petRepository).getPetInventory(); //mock the getInventory Repo
+        PetEntity updatePetItem = myPets.stream()
+                .filter(p -> p.getPetType().equals(PetType.CAT) && p.getPetId() == 1)
+                .findFirst()
+                .orElse(null); //capture the item from the existing list in myPets
+
+       /* CatEntity oldCat = new CatEntity(AnimalType.DOMESTIC, Skin.HAIR, Gender.MALE, Breed.BURMESE,
+                new BigDecimal("65.00"), 1);*/
+        CatEntity updatedCat = new CatEntity(AnimalType.DOMESTIC, Skin.HAIR, Gender.FEMALE, Breed.SPHYNX,
+                new BigDecimal("65.00"), 1);
+
+        Mockito.lenient().doReturn(updatePetItem).when(this.petRepository).findPetByPetTypeAndPetId(PetType.CAT, 1); //mock the getInventory Repo
+        // Mockito.lenient().doReturn(updatePetItem).when(this.petRepository).removeEntity(updatedCat);
+        Mockito.lenient().doReturn(updatedCat).when(this.petRepository).updatePetEntity(updatePetItem, updatedCat);
+
+        PetEntity updateEntity = this.petService.updateInventoryByPetIdAndPetType(PetType.CAT, 1, updatedCat);
+
+        List<DynamicNode> testResultsList = new ArrayList<DynamicNode>();
+        verify(petRepository, times(1)).getPetInventory(); //how many times inventory was called
+        //verify(petRepository).findPetByPetTypeAndPetId(PetType.CAT, 1);
+        // verify(petRepository).removeEntity(updatedCat);
+        verify(petRepository).updatePetEntity(updatePetItem, updatedCat);
+        List<DynamicTest> argCaptureRemovePetTests = Arrays.asList(
+                DynamicTest.dynamicTest("Pet item not match",
+                        ()-> assertNotEquals(updatePetItem.toString(),
+                                updateEntity.toString())),
+                DynamicTest.dynamicTest("Pet item with PetId<1>",
+                        ()-> assertTrue(updateEntity.toString().
+                                contains(String.valueOf(updatePetItem.getPetId())))),
+                DynamicTest.dynamicTest("Pet item with PetType<Cat>",
+                        ()-> assertTrue(updateEntity.toString().
+                                contains(updatePetItem.getPetType().name))));
+        // Assertions using captured value
+        testResultsList.addAll(argCaptureRemovePetTests);
+        return testResultsList.stream();
+    }
+    @TestFactory
+    @Order(3)
+    @DisplayName("Validate Cats only return test")
+    public Stream<DynamicTest> getInventoryTestByCat() throws PetNotFoundSaleException, PetDataStoreException
+    {
+        //Mocking the Inventory for the Pet Store
+        Mockito.lenient().doReturn(myPets).when(petRepository).getPetInventory();
+
+        //Filtering out the Cats in Inventory
+        List<PetEntity> foundCatList = petService.getPetsByPetType(PetType.CAT);
+
+        verify(petRepository, times(1)).getPetInventory(); //how many times inventory was called
+        verify(petRepository).getPetInventory(); //verify the repository method was called
+
+        //Providing Results for Tests
+        List<DynamicTest> inventoryTests = Arrays.asList(
+                DynamicTest.dynamicTest("List size test",
+                        ()-> assertEquals(3, foundCatList.size())),
+                DynamicTest.dynamicTest("Pet item with Cat id 1",
+                        ()-> assertTrue(foundCatList.stream()
+                                .anyMatch(c -> c.getPetId()==1 && c.getPetType() == PetType.CAT
+                                        && c.getGender() ==Gender.MALE && c.getBreed() == Breed.BURMESE))),
+                DynamicTest.dynamicTest("Pet item with Cat id 3",
+                        ()-> assertTrue(foundCatList.stream()
+                                .anyMatch(c -> c.getPetId()== 3&& c.getPetType() == PetType.CAT
+                                        && c.getGender() ==Gender.MALE && c.getBreed() == Breed.RAGDOLL))));
 
 
+        return inventoryTests.stream();
+    }
     //What other tests could we add here?
 }
