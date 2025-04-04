@@ -46,32 +46,36 @@ public class DeletePetEntityTests
     @DisplayName("Delete Pet Entity[Cat}")
     public Stream<DynamicTest> deleteCatTest() throws PetDataStoreException
     {
+        //gather the expected results
         List<PetEntity> cats =
                 expectedResults.stream()
                         .filter(p -> p.getPetType().equals(PetType.CAT))
                         .sorted(Comparator.comparingInt(PetEntity::getPetId))
                         .collect(Collectors.toList());
-        if(cats.isEmpty())
+        if(cats.isEmpty()) //check for empty list, if empty fail test right away
         {
             fail("There is 0 remaining cats in the inventory. Test cannot be executed");
         }
 
+        //Randomly generate an index from the size of the list
         Random random = new Random();
         int index = random.nextInt( cats.size());
-
+        //generate the URI request
         String uri = "inventory/petType/CAT/petId/" + cats.get(index).getPetId();
+
         PetEntity deletedPet =
-                given()
+                given() //add the headers
                     .headers(headers)
                 .when()
-                    .delete(uri)
+                    .delete(uri)//execute the request
                 .then()
                     .log().all()
-                    .assertThat().statusCode(200)
-                    .assertThat().contentType("application/json")
-                    .extract()
-                    .jsonPath()
-                    .getObject(".", PetEntity.class);
+                    .assertThat().statusCode(200) //validate 200 Response, if not test will fail
+                    .assertThat().contentType("application/json") //validate content type
+                    .extract()//extract the response
+                    .jsonPath()//as it is json set the path
+                    .getObject(".", PetEntity.class); //As only expecting one item use getObject and return the entity
+
 
         PetStoreReader psReader = new PetStoreReader();
         List<PetEntity> actualResults = psReader.readJsonFromFile();

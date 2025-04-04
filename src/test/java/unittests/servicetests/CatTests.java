@@ -83,7 +83,7 @@ public class CatTests{
     {
         actualCat = new CatEntity(AnimalType.WILD, Skin.UNKNOWN,Gender.FEMALE, Breed.BURMESE);
         //act and assert
-        assertEquals(Breed.BURMESE, actualCat.getBreed(), "Expecting Breed Maltese!");
+        assertEquals(Breed.BURMESE, actualCat.getBreed(), "Expecting Breed Burmese!");
     }
 
     @Test
