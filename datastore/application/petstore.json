@@ -1,42 +1,29 @@
 [
   {
-    "cost": 100.00,
-    "petId": 2,
-    "legs": 4,
-    "animalType": "DOMESTIC",
-    "petType": "CAT",
-    "skinType": "UNKNOWN",
-    "gender": "FEMALE",
-    "breed": "SPHYNX",
-    "hasLegs": true,
-    "isMammal": false
-  },
-  {
-    "cost": 750.00,
-    "petId": 3,
-    "legs": 4,
-    "animalType": "DOMESTIC",
-    "petType": "DOG",
-    "skinType": "FUR",
-    "gender": "MALE",
-    "breed": "MALTESE",
-    "hasLegs": true,
-    "isMammal": false
-  },
-  {
-    "cost": 650.00,
+    "cost": 888.88,
     "petId": 1,
     "legs": 4,
     "animalType": "DOMESTIC",
-    "petType": "DOG",
-    "skinType": "FUR",
+    "petType": "CAT",
+    "skinType": "HAIR",
     "gender": "MALE",
-    "breed": "POODLE",
+    "breed": "SIAMESE",
     "hasLegs": true,
     "isMammal": false
   },
   {
-    "cost": 50.00,
+    "cost": 15.00,
+    "petId": 3,
+    "legs": 4,
+    "animalType": "UNKNOWN",
+    "petType": "CAT",
+    "skinType": "UNKNOWN",
+    "gender": "FEMALE",
+    "hasLegs": true,
+    "isMammal": false
+  },
+  {
+    "cost": 999.99,
     "petId": 2,
     "legs": 4,
     "animalType": "DOMESTIC",
@@ -48,7 +35,31 @@
     "isMammal": false
   },
   {
-    "cost": 225.00,
+    "cost": -50.00,
+    "petId": 5,
+    "legs": 4,
+    "animalType": "DOMESTIC",
+    "petType": "DOG",
+    "skinType": "FUR",
+    "gender": "FEMALE",
+    "breed": "GERMAN_SHEPHERD",
+    "hasLegs": true,
+    "isMammal": false
+  },
+  {
+    "cost": 999.99,
+    "petId": 1,
+    "legs": 4,
+    "animalType": "DOMESTIC",
+    "petType": "DOG",
+    "skinType": "FUR",
+    "gender": "MALE",
+    "breed": "POODLE",
+    "hasLegs": true,
+    "isMammal": false
+  },
+  {
+    "cost": 999.99,
     "petId": 4,
     "legs": 4,
     "animalType": "DOMESTIC",
@@ -60,14 +71,26 @@
     "isMammal": false
   },
   {
-    "cost": 225.00,
-    "petId": 1,
+    "cost": 999.99,
+    "petId": 3,
     "legs": 4,
     "animalType": "DOMESTIC",
-    "petType": "CAT",
+    "petType": "DOG",
+    "skinType": "FUR",
+    "gender": "MALE",
+    "breed": "MALTESE",
+    "hasLegs": true,
+    "isMammal": false
+  },
+  {
+    "cost": 999.99,
+    "petId": 6,
+    "legs": 4,
+    "animalType": "DOMESTIC",
+    "petType": "DOG",
     "skinType": "FUR",
     "gender": "FEMALE",
-    "breed": "SPHYNX",
+    "breed": "GERMAN_SHEPHERD",
     "hasLegs": true,
     "isMammal": false
   }

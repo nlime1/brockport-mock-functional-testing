@@ -99,6 +99,7 @@ public class PostInventoryByPetTypeTests
         return body.executeTests("Not Found", "No static resource inventory/petType.",
                 "/inventory/petType/", 404).stream();
     }
+
     @TestFactory
     @DisplayName("Post Pet Entity By Invalid Pet Entity Tests")
     public Stream<DynamicTest> postInventoryInvalidPetEntityTest()

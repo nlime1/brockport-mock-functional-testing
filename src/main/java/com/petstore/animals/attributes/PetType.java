@@ -11,7 +11,7 @@ public enum PetType  {
     @JsonProperty("BIRD") BIRD("BIRD", "Bark"),
     @JsonProperty("CAT") CAT("CAT", "Meow"),
     @JsonProperty("DOG") DOG("DOG", "Bark"),
-    @JsonProperty("SNAKE") SNAKE("CAT", "Psss"),
+    @JsonProperty("SNAKE") SNAKE("SNAKE", "Psss"),
     @JsonProperty("UNKNOWN") UNKNOWN("UNKNOWN", "Bark");
 
 
